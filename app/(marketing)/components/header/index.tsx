@@ -11,7 +11,7 @@ const Header = () => {
       <div className="wrapper flex-between">
         <div className="flex-start">
           <Link href="/" className="flex-start">
-            <QrCode className="h-6 w-6 mr-2" />
+            <QrCode className="h-7 w-7 mr-2" />
             <span className="font-['cinzel'] text-3xl font-bold text-['#ff5e1e']">
               {APP_NAME}
             </span>

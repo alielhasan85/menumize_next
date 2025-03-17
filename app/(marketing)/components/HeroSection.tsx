@@ -13,7 +13,7 @@ export default function HeroSection() {
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
             Transform Your Menu Experience
           </h1>
-          <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
+          <p className="mx-auto max-w-[700px] text-secondary md:text-xl">
             Create beautiful digital menus with instant QR codes. Help your
             customers order with ease while you manage everything from one
             dashboard.
