@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import logo from "@/public/logo.png";
+
 // import { redirect } from "next/navigation";
 
 // import { auth } from "@/auth";
@@ -26,7 +28,7 @@ const SignIn = () => {
           <Link href="/" className="flex-center">
             <Image
               priority={true}
-              src="/images/logo.svg"
+              src={logo}
               width={100}
               height={100}
               alt={`${APP_NAME} logo`}
@@ -41,8 +43,6 @@ const SignIn = () => {
           {/* FORM HERE */}
 
           {/* <CredentialsSignInForm /> */}
-
-          
         </CardContent>
       </Card>
     </div>
