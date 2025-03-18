@@ -5,9 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @layer utilities {
-  .accent-color {
-    color: var(--color-accent);
-  }
+  
 
   .bg-gradient-to-b {
     background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
@@ -112,26 +110,26 @@
   --popover-foreground: #2e4857;
 
   /* Primary, Secondary & Accent */
-  --primary: #26a69a; /* Teal */
+  --primary: #2e4857;
   --primary-foreground: #ffffff;
 
-  --secondary: #7c4dff; /* Purple */
+  --secondary: #4e6776; /* Purple */
   --secondary-foreground: #ffffff;
 
-  --accent: #d4ff2f; /* Lime */
-  --accent-foreground: #2e4857;
+  --accent: #fff4ee; /* Lime */
+  --accent-foreground: #ff5e1e;
 
   /* Muted & Destructive */
-  --muted: #e0e0e0;
-  --muted-foreground: #2e4857;
-  --destructive: #e53935;
+  --muted: #f0f2f5;
+  --muted-foreground: #4e6776;
+  --destructive: #d31b27;
 
   /* Borders & Inputs */
   --border: #dad5cf;
-  --input: #fafafa;
+  --input: #dad5cf;
 
   /* Focus / Ring */
-  --ring: #26a69a; /* Teal ring for focus states */
+  --ring: hsla(16, 100%, 56%, 0.6);
 
   /* Example chart colors */
   --chart-1: #26a69a; /* Teal */
