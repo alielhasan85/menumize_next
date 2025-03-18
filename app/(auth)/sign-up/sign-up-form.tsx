@@ -6,8 +6,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
+import Link from "next/link";
 
-import signupImg from "@/public/signup-img.jpg"; // Use a sign-up image (or reuse loginImg if preferred)
+import signupImg from "@/public/login-img.jpg";
 import googleIcon from "@/public/google.svg";
 import { useState } from "react";
 import TermsOfServiceModal from "@/app/(marketing)/modals/TermsOfServiceModal";
@@ -83,9 +84,12 @@ export function SignUpForm({
                 </div>
                 <div className="text-center text-sm">
                   Already have an account?{" "}
-                  <a href="#" className="underline underline-offset-4">
+                  <Link
+                    href="/sign-in"
+                    className="underline underline-offset-4"
+                  >
                     Sign in
-                  </a>
+                  </Link>
                 </div>
               </div>
             </form>

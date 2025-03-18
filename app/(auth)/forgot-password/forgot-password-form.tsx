@@ -7,14 +7,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import Link from "next/link";
-
-import loginImg from "@/public/login-img.jpg";
-import googleIcon from "@/public/google.svg";
 import { useState } from "react";
+
+import forgotPasswordImg from "@/public/login-img.jpg";
 import TermsOfServiceModal from "@/app/(marketing)/modals/TermsOfServiceModal";
 import PrivacyPolicyModal from "@/app/(marketing)/modals/PrivacyPolicyModal";
 
-export function LoginForm({
+export function ForgotPasswordForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
@@ -29,9 +28,9 @@ export function LoginForm({
             <form className="p-6 md:p-8">
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col items-center text-center">
-                  <h1 className="text-2xl font-bold">Welcome back</h1>
+                  <h1 className="text-2xl font-bold">Forgot Password</h1>
                   <p className="text-muted-foreground text-balance">
-                    Login to your MenuMize account
+                    Enter your email address to receive a password reset link.
                   </p>
                 </div>
                 <div className="grid gap-3">
@@ -39,66 +38,28 @@ export function LoginForm({
                   <Input
                     id="email"
                     type="email"
-                    placeholder="m@example.com"
+                    placeholder="you@example.com"
                     required
                   />
                 </div>
-                <div className="grid gap-3">
-                  <div className="flex items-center">
-                    <Label htmlFor="password">Password</Label>
-
-                    <Link
-                      href="/forgot-password"
-                      className="ml-auto text-sm underline-offset-2 hover:underline"
-                    >
-                      Forgot your password?
-                    </Link>
-                    {/* <a
-                      href="#"
-                      className="ml-auto text-sm underline-offset-2 hover:underline"
-                    >
-                      Forgot your password?
-                    </a> */}
-                  </div>
-                  <Input id="password" type="password" required />
-                </div>
                 <Button type="submit" className="w-full">
-                  Login
+                  Send Reset Link
                 </Button>
-                <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
-                  <span className="bg-card text-muted-foreground relative z-10 px-2">
-                    Or continue with
-                  </span>
-                </div>
-                <div className="flex">
-                  <Button
-                    variant="outline"
-                    type="button"
-                    className="w-full relative"
-                  >
-                    <Image
-                      src={googleIcon}
-                      alt="google"
-                      className="h-6 w-6 object-cover"
-                    />
-                    <span className="sr-only">Login with Google</span>
-                  </Button>
-                </div>
                 <div className="text-center text-sm">
-                  Don&apos;t have an account?{" "}
+                  Remember your password?{" "}
                   <Link
-                    href="/sign-up"
+                    href="/sign-in"
                     className="underline underline-offset-4"
                   >
-                    Sign up
+                    Sign in
                   </Link>
                 </div>
               </div>
             </form>
             <div className="bg-muted relative hidden md:block">
               <Image
-                src={loginImg}
-                alt="Image"
+                src={forgotPasswordImg}
+                alt="Forgot password image"
                 className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
               />
             </div>
@@ -107,14 +68,14 @@ export function LoginForm({
         <div className="text-muted-foreground text-center text-xs">
           By clicking continue, you agree to our{" "}
           <button
-            className="text-xs font-bold text-primary cursor-pointer hover:underline underline-offset-4"
+            className="text-xs text-primary cursor-pointer hover:underline underline-offset-4"
             onClick={() => setIsTermsOpen(true)}
           >
             Terms of Service
           </button>{" "}
           and{" "}
           <button
-            className="text-xs text-primary font-bold cursor-pointer hover:underline underline-offset-4"
+            className="text-xs text-primary cursor-pointer hover:underline underline-offset-4"
             onClick={() => setIsPrivacyOpen(true)}
           >
             Privacy Policy

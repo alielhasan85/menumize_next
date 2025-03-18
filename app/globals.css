@@ -3,9 +3,17 @@
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
-
+/* TODO: Add custom variants for light and dark themes */
 @layer utilities {
-  
+  .bg-accent-gradient {
+    background-image: radial-gradient(
+      circle at bottom left,
+      var(--accent-foreground) 0%,
+      var(--accent-foreground) 2%,
+      var(--background) 5% var(--accent-foreground) 20%,
+      var(--background) 100%
+    );
+  }
 
   .bg-gradient-to-b {
     background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
@@ -51,6 +59,13 @@
   .h3-bold {
     @apply font-bold text-xl lg:text-2xl;
   }
+}
+
+@theme {
+  --color-background-platform: #f0f2f5;
+  --color-midnight: #121063;
+  --color-tahiti: #3ab7bf;
+  --color-bermuda: #78dcca;
 }
 
 @theme inline {
@@ -141,9 +156,9 @@
   /* Sidebar (if applicable) */
   --sidebar: #ffffff;
   --sidebar-foreground: #2e4857;
-  --sidebar-primary: #26a69a;
+  --sidebar-primary: #fff4ee;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #d4ff2f;
+  --sidebar-accent: #fff4ee;
   --sidebar-accent-foreground: #2e4857;
   --sidebar-border: #dad5cf;
   --sidebar-ring: #26a69a;

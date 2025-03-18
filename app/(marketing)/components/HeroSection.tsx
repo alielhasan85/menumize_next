@@ -24,7 +24,7 @@ export default function HeroSection() {
             <Link href="/signup">Start Free Trial</Link>
           </Button>
           <Button variant="outline" size="lg" asChild>
-            <Link href="#demo">View Demo</Link>
+            <Link href="/platform">View Demo</Link>
           </Button>
         </div>
       </div>

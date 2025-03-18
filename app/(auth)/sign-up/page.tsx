@@ -1,5 +1,5 @@
-// Import the SignUpForm component from the specified path
-import { SignUpForm } from "@/app/(auth)/sign-up/sign-up-form";
+// app/(auth)/sign-up/page.tsx
+import { SignUpForm } from "./sign-up-form";
 
 export default function SignUpPage() {
   return (

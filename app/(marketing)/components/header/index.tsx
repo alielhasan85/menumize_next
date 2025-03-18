@@ -12,7 +12,7 @@ const Header = () => {
       <div className="wrapper flex-between">
         <div className="flex-start">
           <Link href="/" className="flex-start">
-            <Image src={logo} alt="Logo" height={50} priority />
+            <Image src={logo} alt="Logo" height={80} width = {80} priority />
 
             <span className="font-['cinzel'] text-3xl font-bold text-['#ff5e1e']">
               {APP_NAME}
