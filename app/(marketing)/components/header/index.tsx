@@ -1,17 +1,19 @@
 // import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 
 import { APP_NAME } from "@/lib/constants";
 import Menu from "./menu";
-import { QrCode } from "lucide-react";
+import logo from "@/public/logo.png";
 
 const Header = () => {
   return (
-    <header className="w-full border-b">
+    <header className="w-full border-b bg-background border-gray-200">
       <div className="wrapper flex-between">
         <div className="flex-start">
           <Link href="/" className="flex-start">
-            <QrCode className="h-7 w-7 mr-2" />
+            <Image src={logo} alt="Logo" height={50} priority />
+
             <span className="font-['cinzel'] text-3xl font-bold text-['#ff5e1e']">
               {APP_NAME}
             </span>
