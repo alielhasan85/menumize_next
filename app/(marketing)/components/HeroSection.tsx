@@ -21,7 +21,7 @@ export default function HeroSection() {
         </div>
         <div className="space-x-4">
           <Button size="lg" asChild>
-            <Link href="/signup">Start Free Trial</Link>
+            <Link href="/delete">Start Free Trial</Link>
           </Button>
           <Button variant="outline" size="lg" asChild>
             <Link href="/platform">View Demo</Link>
