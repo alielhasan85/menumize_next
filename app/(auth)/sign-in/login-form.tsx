@@ -81,7 +81,7 @@ export function LoginForm({
                       alt="google"
                       className="h-6 w-6 object-cover"
                     />
-                    <span className="sr-only">Login with Google</span>
+                    <span >Login with Google</span>
                   </Button>
                 </div>
                 <div className="text-center text-sm">

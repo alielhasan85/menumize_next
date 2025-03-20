@@ -1,4 +1,5 @@
 import { getLatestUsers } from "@/lib/actions/users.actions";
+import { UserOutput } from "@/types/user";
 
 export default async function HomePage() {
   const latestUsers = await getLatestUsers();
@@ -15,7 +16,7 @@ export default async function HomePage() {
   );
 }
 
-function UserCard({ user }: { user: any }) {
+function UserCard({ user }: { user: UserOutput }) {
   return (
     <div
       style={{

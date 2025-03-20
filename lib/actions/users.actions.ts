@@ -1,16 +1,17 @@
-// This function will be executed on the server.
+// user.actions.ts
 "use server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/db/prisma";
+import { userOutputSchema } from "@/lib/validators/user.validator";
 import { convertToPlainObject } from "../utils";
 
-// Get the latest products
 export async function getLatestUsers() {
-  const prisma = new PrismaClient();
-
   const data = await prisma.user.findMany({
     take: 1,
     orderBy: { createdAt: "desc" },
   });
 
-  return convertToPlainObject(data);
+  // Parse and transform the data using the Zod schema.
+  const parsedData = userOutputSchema.array().parse(data);
+
+  return convertToPlainObject(parsedData);
 }

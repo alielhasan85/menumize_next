@@ -1,14 +1,12 @@
 // seed.ts
 
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/db/prisma";
 import {
   usersData,
   addressesData,
   subscriptionsData,
   paymentsData,
 } from "./sample-data";
-
-const prisma = new PrismaClient();
 
 async function main() {
   console.log("Seeding database...");
