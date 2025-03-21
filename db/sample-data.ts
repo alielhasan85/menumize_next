@@ -1,19 +1,20 @@
-// sample-data.ts
-
 import { Role, SubscriptionTier } from "@prisma/client";
+import { hashSync } from "bcrypt-ts-edge";
 
-/**
- * Example users:
- * - We use "role" with type Role (one role per user).
- * - Minimal fields for demonstration. Adjust as needed.
- */
+// Example: 3 users with various roles
 export const usersData = [
   {
-    // id is optional because Prisma will auto-generate cuid
-    name: "Alice Smith",
+    name: "Alice Admin",
     email: "alice@example.com",
-    phone: "+1 555 0101",
+    password: hashSync("AlicePass123", 10), // hashed password
     role: Role.ADMIN,
+
+    // Optional fields according to your schema
+    emailVerified: null,
+    image: "https://example.com/alice.jpg",
+    jobTitle: "CEO",
+    businessName: "Alice Co.",
+    phone: "+1 555 0101",
     language: "en",
     orderNotification: true,
     feedbackNotification: true,
@@ -21,15 +22,19 @@ export const usersData = [
     reservationNotification: true,
     smsNotification: false,
     emailNotification: true,
-    // these are arrays, example:
-    staff: ["Bob", "Charlie"],
     addOns: ["extraReports"],
   },
   {
     name: "Bob Manager",
     email: "bob@example.com",
-    phone: "+1 555 0202",
+    password: hashSync("BobPass456", 10),
     role: Role.MANAGER,
+
+    emailVerified: null,
+    image: "https://example.com/bob.jpg",
+    jobTitle: "Manager",
+    businessName: "Bob Inc.",
+    phone: "+1 555 0202",
     language: "en",
     orderNotification: true,
     feedbackNotification: false,
@@ -37,14 +42,19 @@ export const usersData = [
     reservationNotification: false,
     smsNotification: true,
     emailNotification: true,
-    staff: [],
     addOns: [],
   },
   {
     name: "Charlie Waiter",
     email: "charlie@example.com",
-    phone: "+1 555 0303",
+    password: hashSync("Charlie789", 10),
     role: Role.WAITER,
+
+    emailVerified: null,
+    image: null,
+    jobTitle: "Waiter",
+    businessName: null,
+    phone: "+1 555 0303",
     language: "fr",
     orderNotification: false,
     feedbackNotification: true,
@@ -52,16 +62,11 @@ export const usersData = [
     reservationNotification: true,
     smsNotification: true,
     emailNotification: false,
-    staff: [],
     addOns: [],
   },
 ];
 
-/**
- * Example addresses.
- * Each address references a userId. We’ll set that in the seed script
- * after creating users, because we need user IDs from the DB.
- */
+// Example addresses (stored as JSON in the `User.address` field)
 export const addressesData = [
   {
     street: "123 Main St",
@@ -79,24 +84,18 @@ export const addressesData = [
   },
 ];
 
-/**
- * Example subscriptions.
- * We’ll assign them to a user in the seed script once we have a userId.
- */
+// Example subscriptions
 export const subscriptionsData = [
   {
     tier: SubscriptionTier.BASE,
-    // startDate, endDate, isActive, etc. can be left to defaults or overridden
+    // startDate/endDate/isActive can rely on their defaults
   },
   {
     tier: SubscriptionTier.PREMIUM,
   },
 ];
 
-/**
- * Example payments.
- * We'll assign them to a user and possibly a subscription.
- */
+// Example payments
 export const paymentsData = [
   {
     amount: 49.99,

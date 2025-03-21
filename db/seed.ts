@@ -1,6 +1,5 @@
 // seed.ts
-
-import { prisma } from "@/db/prisma";
+import { prisma } from "@/db/prisma"; // or wherever your PrismaClient is exported
 import {
   usersData,
   addressesData,
@@ -11,64 +10,58 @@ import {
 async function main() {
   console.log("Seeding database...");
 
-  // 1. Create Users
-  // createMany supports an array of objects
+  // 1. Create Users (with hashed passwords already in usersData)
   const createdUsers = await prisma.user.createMany({
     data: usersData,
-    skipDuplicates: true, // if you run seed multiple times, avoids error for unique fields
+    skipDuplicates: true,
   });
-  console.log(`Created ${createdUsers.count} users`);
+  console.log(`Created ${createdUsers.count} users.`);
 
-  // Retrieve the actual user records (to get their auto-generated IDs).
+  // 2. Fetch actual user records (to get their generated UUID IDs)
   const allUsers = await prisma.user.findMany();
   console.log("All users:", allUsers);
 
-  // 2. Assign addresses to a user
-  // For example, let's assign the addresses to the first user
+  // 3. Update the first user's "address" field with addressesData as JSON
   if (allUsers.length > 0) {
-    const userId = allUsers[0].id;
-
-    // For demonstration, create each address one by one
-    for (const addressData of addressesData) {
-      await prisma.address.create({
-        data: {
-          ...addressData,
-          userId, // reference the first user's ID
-        },
-      });
-    }
-    console.log(`Assigned ${addressesData.length} addresses to user ${userId}`);
+    const firstUserId = allUsers[0].id;
+    await prisma.user.update({
+      where: { id: firstUserId },
+      data: {
+        address: addressesData, // store entire addresses array as JSON
+      },
+    });
+    console.log(`Updated user ${firstUserId} with address data`);
   }
 
-  // 3. Assign a subscription to each user (just an example)
+  // 4. Assign a subscription to each user (randomly picks from subscriptionsData)
   for (const user of allUsers) {
-    // pick a random subscription data
-    const randomSubscriptionData =
+    const randomSubscription =
       subscriptionsData[Math.floor(Math.random() * subscriptionsData.length)];
+
     await prisma.subscription.create({
       data: {
-        ...randomSubscriptionData,
-        userId: user.id,
+        ...randomSubscription,
+        userId: user.id, // must be a UUID
       },
     });
   }
-  console.log(`Assigned a random subscription to all users`);
+  console.log("Assigned random subscriptions to each user.");
 
-  // 4. Create Payment records
-  // For demonstration, we attach each payment to the first user
+  // 5. Create Payment records for the first user
   if (allUsers.length > 0) {
-    const userId = allUsers[0].id;
-    for (const paymentData of paymentsData) {
-      // Optionally also link a subscription if needed
+    const firstUserId = allUsers[0].id;
+    for (const payment of paymentsData) {
       await prisma.payment.create({
         data: {
-          ...paymentData,
-          userId,
-          // subscriptionId: <some subscription.id if you want to link>
+          ...payment,
+          userId: firstUserId,
+          // subscriptionId could also be linked here if desired
         },
       });
     }
-    console.log(`Created ${paymentsData.length} payments for user ${userId}`);
+    console.log(
+      `Created ${paymentsData.length} payments for user ${firstUserId}.`
+    );
   }
 
   console.log("Seeding finished.");
