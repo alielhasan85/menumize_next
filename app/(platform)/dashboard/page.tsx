@@ -1,3 +1,4 @@
+// Page.tsx
 import { AppSidebar } from "@/app/(platform)/components/app-sidebar";
 import {
   Breadcrumb,
@@ -13,8 +14,21 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/app/(platform)/components/sidebar";
+import { NavUser } from "@/app/(platform)/components/nav-user";
+import { auth } from "@/auth";
 
-export default function Page() {
+export default async function Page() {
+  // Fetch session data on the server side
+  const session = await auth();
+
+  // Transform session.user to match NavUser's expected shape.
+  const user = {
+    name: session?.user?.name || "Guest",
+    email: session?.user?.email || "",
+    // Map the session's image property to avatar
+    avatar: session?.user?.image || "/default-avatar.png",
+  };
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -39,6 +53,10 @@ export default function Page() {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
+          </div>
+          {/* Add NavUser on the right */}
+          <div className="ml-auto pr-4">
+            <NavUser user={user} />
           </div>
         </header>
         <div className="bg-background-platform flex flex-1 flex-col gap-4 p-4 pt-4">

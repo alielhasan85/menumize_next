@@ -3,6 +3,7 @@
 import { prisma } from "@/db/prisma";
 import { userOutputSchema } from "@/lib/validators/user.validator";
 import { convertToPlainObject } from "../utils";
+// lib/actions/users.actions.ts
 
 export async function getLatestUsers() {
   const data = await prisma.user.findMany({
@@ -15,3 +16,5 @@ export async function getLatestUsers() {
 
   return convertToPlainObject(parsedData);
 }
+
+

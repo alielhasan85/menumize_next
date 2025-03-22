@@ -5,10 +5,10 @@ CREATE TYPE "SubscriptionTier" AS ENUM ('BASE', 'ESSENTIAL', 'PREMIUM');
 CREATE TYPE "Role" AS ENUM ('ADMIN', 'USER', 'MANAGER', 'WAITER', 'ACCOUNTANT');
 
 -- CreateTable
-CREATE TABLE "User" (
-    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+CREATE TABLE "users" (
+    "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "emailVerified" TIMESTAMP(6),
+    "email_verified" TIMESTAMP(3),
     "image" TEXT,
     "name" TEXT NOT NULL,
     "jobTitle" TEXT,
@@ -28,10 +28,11 @@ CREATE TABLE "User" (
     "reservationNotification" BOOLEAN NOT NULL DEFAULT true,
     "smsNotification" BOOLEAN NOT NULL DEFAULT false,
     "emailNotification" BOOLEAN NOT NULL DEFAULT true,
+    "profileComplete" BOOLEAN NOT NULL DEFAULT false,
     "addOns" TEXT[],
     "address" JSON,
 
-    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -41,7 +42,7 @@ CREATE TABLE "Subscription" (
     "startDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "endDate" TIMESTAMP(3),
     "isActive" BOOLEAN NOT NULL DEFAULT true,
-    "userId" UUID NOT NULL,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "Subscription_pkey" PRIMARY KEY ("id")
 );
@@ -53,18 +54,19 @@ CREATE TABLE "Payment" (
     "paidAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "description" TEXT,
     "paymentMethod" TEXT,
-    "userId" UUID NOT NULL,
+    "userId" TEXT NOT NULL,
     "subscriptionId" TEXT,
 
     CONSTRAINT "Payment_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Account" (
-    "userId" UUID NOT NULL,
+CREATE TABLE "accounts" (
+    "id" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
     "type" TEXT NOT NULL,
     "provider" TEXT NOT NULL,
-    "providerAccountId" TEXT NOT NULL,
+    "provider_account_id" TEXT NOT NULL,
     "refresh_token" TEXT,
     "access_token" TEXT,
     "expires_at" INTEGER,
@@ -75,16 +77,17 @@ CREATE TABLE "Account" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "account_provider_providerAccountId_pk" PRIMARY KEY ("provider","providerAccountId")
+    CONSTRAINT "accounts_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Session" (
-    "sessionToken" TEXT NOT NULL,
-    "userId" UUID NOT NULL,
+CREATE TABLE "sessions" (
+    "id" TEXT NOT NULL,
+    "session_token" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "expires" TIMESTAMP(6) NOT NULL,
 
-    CONSTRAINT "Session_pkey" PRIMARY KEY ("sessionToken")
+    CONSTRAINT "sessions_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -97,19 +100,25 @@ CREATE TABLE "VerificationToken" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "user_email_idx" ON "User"("email");
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "accounts_provider_provider_account_id_key" ON "accounts"("provider", "provider_account_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "sessions_session_token_key" ON "sessions"("session_token");
 
 -- AddForeignKey
-ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Payment" ADD CONSTRAINT "Payment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Payment" ADD CONSTRAINT "Payment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Payment" ADD CONSTRAINT "Payment_subscriptionId_fkey" FOREIGN KEY ("subscriptionId") REFERENCES "Subscription"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Account" ADD CONSTRAINT "account_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
+ALTER TABLE "accounts" ADD CONSTRAINT "accounts_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Session" ADD CONSTRAINT "session_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
+ALTER TABLE "sessions" ADD CONSTRAINT "sessions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION;

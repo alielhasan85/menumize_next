@@ -86,6 +86,7 @@ export const userOutputSchema = z.object({
   // NextAuth relations:
   account: z.array(z.any()).optional().default([]),
   session: z.array(z.any()).optional().default([]),
+  profileComplete: z.boolean(),
 });
 
 export const signInFormSchema = z.object({

@@ -1,6 +1,6 @@
+// app/(platform)/components/nav-user.tsx
 "use client";
-import { useRouter } from "next/navigation";
-
+// import { useRouter } from "next/navigation";
 import {
   BadgeCheck,
   Bell,
@@ -9,7 +9,6 @@ import {
   LogOut,
   Sparkles,
 } from "lucide-react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -26,7 +25,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/app/(platform)/components/sidebar";
-
+import { signOut } from "next-auth/react";
 export function NavUser({
   user,
 }: {
@@ -37,13 +36,16 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
-  const router = useRouter();
 
-  const handleLogout = () => {
-    // Insert any additional logout logic here (e.g., clearing tokens)
-    router.push("/");
+  // const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await signOut({ redirect: true, callbackUrl: "/" });
+    } catch (error) {
+      console.error("Error during sign out:", error);
+    }
   };
-
   return (
     <SidebarMenu>
       <SidebarMenuItem>

@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
@@ -23,7 +17,6 @@ enum SubscriptionTier {
   PREMIUM
 }
 
-// A single enum for role
 enum Role {
   ADMIN
   USER
@@ -36,51 +29,38 @@ enum Role {
 // -------------------------------------------
 // Models
 // -------------------------------------------
-
 model User {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-
-  // NextAuth typically identifies users by email
-  // so you often want it to be unique
-  email         String    @unique(map: "user_email_idx")
-  emailVerified DateTime? @db.Timestamp(6)
-  image         String?
-  name          String
-  jobTitle      String?
-  businessName  String?
-  password      String?
-
-  phone String?
-
-  // Role (one per user)
-  role Role @default(USER)
-
-  // Basic user meta
-  createdAt  DateTime  @default(now()) @db.Timestamp(6)
-  lastLogin  DateTime?
-  loginCount Int       @default(0)
-  totalPaid  Decimal   @default(0.0)
-  isActive   Boolean   @default(true)
-
-  // Inline user settings & notifications
+  id                      String         @id @default(cuid())
+  email                   String         @unique
+  emailVerified           DateTime?      @map("email_verified")
+  image                   String?
+  name                    String
+  jobTitle                String?
+  businessName            String?
+  password                String?
+  phone                   String?
+  role                    Role           @default(USER)
+  createdAt               DateTime       @default(now()) @db.Timestamp(6)
+  lastLogin               DateTime?
+  loginCount              Int            @default(0)
+  totalPaid               Decimal        @default(0.0)
+  isActive                Boolean        @default(true)
   language                String? // e.g., "en", "fr"
-  orderNotification       Boolean @default(true)
-  feedbackNotification    Boolean @default(true)
-  integrationNotification Boolean @default(true)
-  reservationNotification Boolean @default(true)
-  smsNotification         Boolean @default(false)
-  emailNotification       Boolean @default(true)
+  orderNotification       Boolean        @default(true)
+  feedbackNotification    Boolean        @default(true)
+  integrationNotification Boolean        @default(true)
+  reservationNotification Boolean        @default(true)
+  smsNotification         Boolean        @default(false)
+  emailNotification       Boolean        @default(true)
+  profileComplete         Boolean        @default(false)
+  addOns                  String[]
+  address                 Json?          @db.Json
+  subscriptions           Subscription[]
+  payments                Payment[]
+  account                 Account[]
+  session                 Session[]
 
-  // Arrays for staff & add-ons
-
-  addOns String[]
-
-  // Addresses, Subscriptions, Payments
-  address       Json?          @db.Json
-  subscriptions Subscription[]
-  payments      Payment[]
-  account       Account[]
-  session       Session[]
+  @@map("users")
 }
 
 model Subscription {
@@ -90,8 +70,9 @@ model Subscription {
   endDate   DateTime?
   isActive  Boolean          @default(true)
 
+  // Relation to User: note that userId is now a plain String
   user   User   @relation(fields: [userId], references: [id])
-  userId String @db.Uuid
+  userId String
 
   payments Payment[]
 }
@@ -105,7 +86,7 @@ model Payment {
 
   // Payment belongs to a User
   user   User   @relation(fields: [userId], references: [id])
-  userId String @db.Uuid
+  userId String
 
   // (Optional) Payment belongs to a Subscription
   subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
@@ -113,30 +94,36 @@ model Payment {
 }
 
 model Account {
-  userId            String   @db.Uuid
+  id                String   @id @default(cuid())
+  userId            String   @map("user_id")
   type              String
   provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
+  providerAccountId String   @map("provider_account_id")
+  refresh_token     String?  @db.Text
+  access_token      String?  @db.Text
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String?
+  id_token          String?  @db.Text
   session_state     String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "account_userId_user_id_fk")
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@id([provider, providerAccountId], map: "account_provider_providerAccountId_pk")
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
 }
 
 model Session {
-  sessionToken String   @id
-  userId       String   @db.Uuid
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String
   expires      DateTime @db.Timestamp(6)
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "session_userId_user_id_fk")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("sessions")
 }
 
 model VerificationToken {
