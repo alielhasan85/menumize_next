@@ -14,6 +14,8 @@ import { useState } from "react";
 import TermsOfServiceModal from "@/app/(marketing)/modals/TermsOfServiceModal";
 import PrivacyPolicyModal from "@/app/(marketing)/modals/PrivacyPolicyModal";
 
+import { signIn } from "next-auth/react";
+
 export function LoginForm({
   className,
   ...props
@@ -75,13 +77,14 @@ export function LoginForm({
                     variant="outline"
                     type="button"
                     className="w-full relative"
+                    onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
                   >
                     <Image
                       src={googleIcon}
                       alt="google"
                       className="h-6 w-6 object-cover"
                     />
-                    <span >Login with Google</span>
+                    <span>Login with Google</span>
                   </Button>
                 </div>
                 <div className="text-center text-sm">
