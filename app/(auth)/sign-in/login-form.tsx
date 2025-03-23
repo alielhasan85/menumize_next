@@ -77,7 +77,9 @@ export function LoginForm({
                     variant="outline"
                     type="button"
                     className="w-full relative"
-                    onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                    onClick={() =>
+                      signIn("google", { callbackUrl: "/dashboard" })
+                    }
                   >
                     <Image
                       src={googleIcon}

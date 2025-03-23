@@ -57,8 +57,8 @@ model User {
   address                 Json?          @db.Json
   subscriptions           Subscription[]
   payments                Payment[]
-  account                 Account[]
-  session                 Session[]
+  accounts                Account[] // renamed from "account"
+  sessions                Session[] // renamed from "session"
 
   @@map("users")
 }
@@ -70,7 +70,7 @@ model Subscription {
   endDate   DateTime?
   isActive  Boolean          @default(true)
 
-  // Relation to User: note that userId is now a plain String
+  // Relation to User: note the plain String userId
   user   User   @relation(fields: [userId], references: [id])
   userId String
 
@@ -121,7 +121,7 @@ model Session {
   userId       String
   expires      DateTime @db.Timestamp(6)
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
 }
