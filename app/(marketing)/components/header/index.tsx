@@ -1,8 +1,5 @@
-// import Image from "next/image";
 import Link from "next/link";
 import Image from "next/image";
-
-// import { APP_NAME } from "@/lib/constants";
 import Menu from "./menu";
 import logo from "@/public/logo.png";
 
@@ -12,14 +9,17 @@ const Header = () => {
       <div className="wrapper flex-between">
         <div className="flex-start">
           <Link href="/" className="flex-start">
-            <Image src={logo} alt="Logo" height={40} priority />
-
-            {/* <span className="font-['cinzel'] text-3xl font-bold text-['#ff5e1e']">
-              {APP_NAME}
-            </span> */}
+            <div className="relative w-[150px] h-[30px] md:w-[200px] md:h-[40px]">
+              <Image
+                src={logo}
+                alt="Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
           </Link>
         </div>
-
         <Menu />
       </div>
     </header>

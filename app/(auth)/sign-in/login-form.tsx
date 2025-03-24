@@ -41,7 +41,7 @@ export function LoginForm({
                   <Input
                     id="email"
                     type="email"
-                    placeholder="m@example.com"
+                    placeholder="email@example.com"
                     required
                   />
                 </div>
@@ -112,14 +112,14 @@ export function LoginForm({
         <div className="text-muted-foreground text-center text-xs">
           By clicking continue, you agree to our{" "}
           <button
-            className="text-xs font-bold text-primary cursor-pointer hover:underline underline-offset-4"
+            className="text-xs text-primary cursor-pointer underline underline-offset-3 hover:font-bold "
             onClick={() => setIsTermsOpen(true)}
           >
             Terms of Service
           </button>{" "}
           and{" "}
           <button
-            className="text-xs text-primary font-bold cursor-pointer hover:underline underline-offset-4"
+            className="text-xs text-primary cursor-pointer underline underline-offset-3 hover:font-bold"
             onClick={() => setIsPrivacyOpen(true)}
           >
             Privacy Policy

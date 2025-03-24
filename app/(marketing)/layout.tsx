@@ -21,8 +21,7 @@ export default function MarketingLayout({
 
       <Header />
 
-      {/* Spacer for fixed header */}
-      <div className="h-14" />
+
 
       <main className="flex-1">{children}</main>
       <Footer />

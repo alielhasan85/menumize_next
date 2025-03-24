@@ -17,15 +17,26 @@ import {
 import { NavUser } from "@/app/(platform)/components/nav-user";
 import { auth } from "@/auth";
 
+import { redirect } from "next/navigation";
+
 export default async function Page() {
   // Fetch session data on the server side
   const session = await auth();
+
+  if (!session?.user) {
+    // Not logged in at all
+    redirect("/sign-in");
+  }
+
+  if (!session.user.profileComplete) {
+    // Logged in, but profile not complete
+    redirect("/profile");
+  }
 
   // Transform session.user to match NavUser's expected shape.
   const user = {
     name: session?.user?.name || "Guest",
     email: session?.user?.email || "",
-    // Map the session's image property to avatar
     avatar: session?.user?.image || "/default-avatar.png",
   };
 
