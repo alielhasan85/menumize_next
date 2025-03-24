@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,7 +11,6 @@ import Link from "next/link";
 
 import loginImg from "@/public/login-img.jpg";
 import googleIcon from "@/public/google.svg";
-import { useState } from "react";
 import TermsOfServiceModal from "@/app/(marketing)/modals/TermsOfServiceModal";
 import PrivacyPolicyModal from "@/app/(marketing)/modals/PrivacyPolicyModal";
 
@@ -22,6 +22,14 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const [isTermsOpen, setIsTermsOpen] = useState(false);
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function handleGoogleSignIn() {
+    setIsLoading(true);
+    await signIn("google", { callbackUrl: "/dashboard" });
+    // The redirect will happen automatically;
+    // you might not see isLoading change back to false.
+  }
 
   return (
     <>
@@ -48,7 +56,6 @@ export function LoginForm({
                 <div className="grid gap-3">
                   <div className="flex items-center">
                     <Label htmlFor="password">Password</Label>
-
                     <Link
                       href="/forgot-password"
                       className="ml-auto text-sm underline-offset-2 hover:underline"
@@ -77,16 +84,16 @@ export function LoginForm({
                     variant="outline"
                     type="button"
                     className="w-full relative"
-                    onClick={() =>
-                      signIn("google", { callbackUrl: "/dashboard" })
-                    }
+                    onClick={handleGoogleSignIn}
                   >
                     <Image
                       src={googleIcon}
                       alt="google"
                       className="h-6 w-6 object-cover"
                     />
-                    <span>Login with Google</span>
+                    <span>
+                      {isLoading ? "Redirecting..." : "Login with Google"}
+                    </span>
                   </Button>
                 </div>
                 <div className="text-center text-sm">
