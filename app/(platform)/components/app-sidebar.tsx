@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+// import Image from "next/image";
+// import Image from "next/image";
 import {
   AudioWaveform,
   BookOpen,
@@ -16,7 +18,6 @@ import {
 
 import { NavMain } from "@/app/(platform)/components/nav-main";
 import { NavProjects } from "@/app/(platform)/components/nav-projects";
-import { NavUser } from "@/app/(platform)/components/nav-user";
 import { TeamSwitcher } from "@/app/(platform)/components/team-switcher";
 import {
   Sidebar,
@@ -25,6 +26,8 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/app/(platform)/components/sidebar";
+import { SidebarLogo } from "./side-bar-logo";
+import { NavSingleItem } from "./single-sidebar-item";
 
 // This is sample data.
 const data = {
@@ -33,14 +36,15 @@ const data = {
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
+  // TODO: teams is for venue list
   teams: [
     {
-      name: "Acme Inc",
+      name: "Naya menu",
       logo: GalleryVerticalEnd,
       plan: "Enterprise",
     },
     {
-      name: "Acme Corp.",
+      name: "test 2",
       logo: AudioWaveform,
       plan: "Startup",
     },
@@ -160,14 +164,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
+        {/* Add the logo above the team switcher */}
+        <SidebarLogo />
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
+        <NavSingleItem
+          url="/dashboard"
+          text="Dashboard"
+          iconSrc="/dashboard.svg"
+          iconAlt="Dashboard"
+          iconWidth={22}
+          iconHeight={22}
+          tooltip="Dashboard"
+        />
+
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <>to add contact</>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

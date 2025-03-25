@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { skipProfileAction } from "@/lib/actions/profile.actions";
+import { completeProfileAction } from "@/lib/actions/profile.actions";
 import {
   Card,
   CardContent,
@@ -22,27 +22,16 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { userCreateSchema } from "@/lib/validators/user.validator";
-import { z } from "zod";
-
-// Create a new schema for profile completion by picking and extending fields
-const profileSchema = userCreateSchema
-  .pick({
-    name: true,
-    phone: true,
-    businessName: true,
-  })
-  .extend({
-    country: z.string().min(1, "Country is required"),
-  });
-
-type ProfileFormValues = z.infer<typeof profileSchema>;
+import {
+  profileSchema,
+  type ProfileSchema,
+} from "@/lib/validators/user.validator";
 
 export default function ProfilePage() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
-  const form = useForm<ProfileFormValues>({
+  const form = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
       name: "",
@@ -52,19 +41,21 @@ export default function ProfilePage() {
     },
   });
 
-  async function onSubmit(values: ProfileFormValues) {
-    console.log("Form submitted: ", values);
-    // Hook up your completeProfileAction here later
-  }
-
-  async function handleSkip() {
+  async function onSubmit(values: ProfileSchema) {
     startTransition(async () => {
-      // Call the server action to update DB
-      await skipProfileAction();
-      // Then redirect the user client-side
+      // Call the server action to update the profile.
+      await completeProfileAction(values);
+      // Redirect to the dashboard after updating.
       router.push("/dashboard");
     });
   }
+
+  // async function handleSkip() {
+  //   startTransition(async () => {
+  //     await skipProfileAction();
+  //     router.push("/dashboard");
+  //   });
+  // }
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -152,17 +143,17 @@ export default function ProfilePage() {
               />
 
               <div className="flex gap-4">
-                <Button type="submit" className="w-full">
-                  Start Free Trial
+                <Button type="submit" className="w-full" disabled={isPending}>
+                  {isPending ? "Submitting..." : "Start Free Trial"}
                 </Button>
-                <Button
+                {/* <Button
                   variant="outline"
                   onClick={handleSkip}
                   className="w-full"
                   disabled={isPending}
                 >
                   {isPending ? "Skipping..." : "Skip"}
-                </Button>
+                </Button> */}
               </div>
             </form>
           </Form>

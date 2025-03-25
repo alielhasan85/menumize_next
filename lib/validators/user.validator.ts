@@ -97,6 +97,19 @@ export const signInFormSchema = z.object({
   password: z.string().min(3, "Password must be at least 3 characters"),
 });
 
+// Create a new schema for profile completion by picking and extending fields
+export const profileSchema = userCreateSchema
+  .pick({
+    name: true,
+    phone: true,
+    businessName: true,
+  })
+  .extend({
+    country: z.string().min(1, "Country is required"),
+  });
+
+  export type ProfileSchema = z.infer<typeof profileSchema>;
+
 // Export TypeScript types (if needed)
 export type UserCreateInput = z.infer<typeof userCreateSchema>;
 export type UserOutput = z.infer<typeof userOutputSchema>;

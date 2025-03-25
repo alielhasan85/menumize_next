@@ -1,4 +1,5 @@
-// user.actions.ts
+
+// lib/actions/users.actions.ts
 "use server";
 import { prisma } from "@/db/prisma";
 import { userOutputSchema } from "@/lib/validators/user.validator";
