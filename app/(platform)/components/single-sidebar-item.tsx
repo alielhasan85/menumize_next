@@ -40,35 +40,37 @@ export function NavSingleItem({
   text,
   iconSrc,
   iconAlt,
-  iconWidth = 24,
-  iconHeight = 24,
+  iconWidth = 20,
+  iconHeight = 20,
   tooltip,
   navGroupLabel,
 }: NavSingleItemProps) {
   const finalTooltip = tooltip ?? text;
 
   const itemNode = (
-    <SidebarMenuItem>
-      <SidebarMenuButton tooltip={finalTooltip} asChild size= "lg">
-        <a href={url}>
-          <Image
-            src={iconSrc}
-            alt={iconAlt ?? text}
-            width={iconWidth}
-            height={iconHeight}
-          />
-          <span>{text}</span>
-        </a>
-      </SidebarMenuButton>
-    </SidebarMenuItem>
+   
+      <SidebarMenuItem className="px-2">
+        <SidebarMenuButton tooltip={finalTooltip} asChild>
+          <a href={url}>
+            <Image
+              src={iconSrc}
+              alt={iconAlt ?? text}
+              width={iconWidth}
+              height={iconHeight}
+            />
+            <span>{text}</span>
+          </a>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+  
   );
 
-  // If no label, just return the single item
+  // If no group label is provided, simply render the item within a SidebarMenu.
   if (!navGroupLabel) {
     return <SidebarMenu>{itemNode}</SidebarMenu>;
   }
 
-  // Otherwise, wrap it in a group with a label
+  // Otherwise, wrap it in a group with a label.
   return (
     <SidebarGroup>
       <SidebarGroupLabel>{navGroupLabel}</SidebarGroupLabel>

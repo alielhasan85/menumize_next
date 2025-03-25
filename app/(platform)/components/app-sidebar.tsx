@@ -56,7 +56,7 @@ const data = {
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Menu Management",
       url: "#",
       icon: SquareTerminal,
       isActive: true,
@@ -163,7 +163,7 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
+      <SidebarHeader className="gap-0 pt-0 pb-4">
         {/* Add the logo above the team switcher */}
         <SidebarLogo />
         <TeamSwitcher teams={data.teams} />
@@ -173,10 +173,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           url="/dashboard"
           text="Dashboard"
           iconSrc="/dashboard.svg"
-          iconAlt="Dashboard"
-          iconWidth={22}
-          iconHeight={22}
-          tooltip="Dashboard"
+        />
+        <NavSingleItem
+          url="/Reports"
+          text="Reports"
+          iconSrc="/dashboard.svg"
         />
 
         <NavMain items={data.navMain} />

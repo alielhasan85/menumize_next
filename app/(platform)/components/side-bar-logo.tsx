@@ -11,7 +11,7 @@ function SidebarLogo() {
   if (state === "collapsed") return null;
 
   return (
-    <div className="relative w-[190px] aspect-[190/80]">
+    <div className="relative w-[190px] aspect-[190/80] pt-0">
       <Image
         src="/logo.png"
         alt="Menumize Logo"
