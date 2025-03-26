@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { useSidebar } from "@/app/(platform)/components/sidebar";
+import { useSidebar } from "@/components/ui/sidebar";
 
 function SidebarLogo() {
   const { state } = useSidebar();

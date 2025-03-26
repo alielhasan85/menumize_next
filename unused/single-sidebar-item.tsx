@@ -8,7 +8,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/app/(platform)/components/sidebar";
+} from "@/components/ui/sidebar";
 
 type NavSingleItemProps = {
   /** The URL or route path for this item. */
@@ -48,21 +48,19 @@ export function NavSingleItem({
   const finalTooltip = tooltip ?? text;
 
   const itemNode = (
-   
-      <SidebarMenuItem className="px-2">
-        <SidebarMenuButton tooltip={finalTooltip} asChild>
-          <a href={url}>
-            <Image
-              src={iconSrc}
-              alt={iconAlt ?? text}
-              width={iconWidth}
-              height={iconHeight}
-            />
-            <span>{text}</span>
-          </a>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
-  
+    <SidebarMenuItem className="px-2">
+      <SidebarMenuButton tooltip={finalTooltip} asChild>
+        <a href={url}>
+          <Image
+            src={iconSrc}
+            alt={iconAlt ?? text}
+            width={iconWidth}
+            height={iconHeight}
+          />
+          <span>{text}</span>
+        </a>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
   );
 
   // If no group label is provided, simply render the item within a SidebarMenu.

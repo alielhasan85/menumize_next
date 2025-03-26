@@ -24,7 +24,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/app/(platform)/components/sidebar";
+} from "@/components/ui/sidebar";
 import { signOut } from "next-auth/react";
 export function NavUser({
   user,
