@@ -18,7 +18,9 @@
   .bg-gradient-to-b {
     background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
   }
-
+  .sidebar-menu-item {
+    list-style: none;
+  }
   .text-primary {
     color: var(--color-primary);
   }

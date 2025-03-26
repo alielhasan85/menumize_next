@@ -5,12 +5,15 @@ import * as React from "react";
 // import Image from "next/image";
 import {
   AudioWaveform,
+  BarChart,
   BookOpen,
   Bot,
   Command,
   Frame,
   GalleryVerticalEnd,
+  LayoutDashboard,
   Map,
+  MoreHorizontal,
   PieChart,
   Settings2,
   SquareTerminal,
@@ -23,19 +26,24 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
+  SidebarGroupLabel,
   SidebarHeader,
+  SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuButton,
+  SidebarMenuItem,
   SidebarRail,
 } from "@/app/(platform)/components/sidebar";
 import { SidebarLogo } from "./side-bar-logo";
 import { NavSingleItem } from "./single-sidebar-item";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // This is sample data.
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   // TODO: teams is for venue list
   teams: [
     {
@@ -169,19 +177,57 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavSingleItem
-          url="/dashboard"
-          text="Dashboard"
-          iconSrc="/dashboard.svg"
-        />
-        <NavSingleItem
-          url="/Reports"
-          text="Reports"
-          iconSrc="/dashboard.svg"
-        />
+        <SidebarGroup>
+          <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton tooltip="Dashboard" asChild size={"lg"}>
+                <a href="/dashboard">
+                  <LayoutDashboard />
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Dashboard
+                  </span>
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton tooltip="Reports" asChild size={"lg"}>
+                <a href="/reports">
+                  <BarChart />
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Reports
+                  </span>
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
 
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+          <SidebarGroupLabel>Menu Management</SidebarGroupLabel>
+
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href="/menu">
+                  <SquareTerminal />
+                  <span>Menu Management</span>
+                </a>
+              </SidebarMenuButton>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <SidebarMenuAction showOnHover>
+                    <MoreHorizontal />
+                    <span className="sr-only">More</span>
+                  </SidebarMenuAction>
+                </DropdownMenuTrigger>
+              </DropdownMenu>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
+
+        {/* <NavMain items={data.navMain} />
+        <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
         <>to add contact</>
