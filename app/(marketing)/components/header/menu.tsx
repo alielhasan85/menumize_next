@@ -14,7 +14,7 @@ import { Separator } from "@/components/ui/separator";
 export default function Menu() {
   return (
     <>
-      <div className="flex  justify-end">
+      <div className="flex justify-end">
         <nav className="md:flex hidden w-full max-w-xs gap-6 items-center">
           <a className="text-sm font-medium hover:underline" href="#features">
             Features
@@ -23,8 +23,8 @@ export default function Menu() {
             Pricing
           </a>
           <Button asChild>
-            <Link href="/sign-in">
-              <UserIcon />
+            <Link href="https://platform.menumize.com">
+              <UserIcon className="mr-2 h-4 w-4" />
               Sign In
             </Link>
           </Button>
@@ -61,8 +61,8 @@ export default function Menu() {
               </div>
 
               <Button asChild>
-                <Link href="/sign-in">
-                  <UserIcon />
+                <Link href="https://platform.menumize.com">
+                  <UserIcon className="mr-2 h-4 w-4" />
                   Sign In
                 </Link>
               </Button>
@@ -72,22 +72,4 @@ export default function Menu() {
       </div>
     </>
   );
-}
-
-{
-  /* <header className="px-4 lg:px-6 h-14 flex items-center fixed w-full bg-white/80 backdrop-blur-sm z-50 border-b">
-        
-        <nav className="ml-auto flex gap-4 sm:gap-6"> 
-   
-          <Link
-            href="/business"
-            className="text-sm font-medium hover:underline"
-          >
-            Restaurants
-          </Link>
-          <Link href="/sign-in" className="text-sm font-medium hover:underline">
-            Login
-          </Link>
-        </nav>
-      </header> */
 }
