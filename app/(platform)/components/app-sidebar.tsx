@@ -4,12 +4,8 @@ import * as React from "react";
 import { usePathname } from "next/navigation";
 import {
   AudioWaveform,
-  BarChart,
   Command,
   GalleryVerticalEnd,
-  LayoutDashboard,
-  ListTree,
-  Settings,
 } from "lucide-react";
 
 import { TeamSwitcher } from "@/app/(platform)/components/team-switcher";
@@ -55,13 +51,12 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenu>
             <SidebarSingleItem
               href="/dashboard"
-              icon={LayoutDashboard}
+             
               label="Dashboard"
               tooltip="Dashboard"
             />
             <SidebarSingleItem
               href="/reports"
-              icon={BarChart}
               label="Reports"
               tooltip="Reports"
             />
@@ -72,7 +67,6 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarMenu>
             <CollapsibleMenu
-              icon={ListTree}
               label="Menu Management"
               currentPath={currentPath}
               items={[
@@ -87,7 +81,6 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
           {/* Settings Group */}
           <SidebarMenu>
             <CollapsibleMenu
-              icon={Settings}
               label="Settings"
               currentPath={currentPath}
               items={[

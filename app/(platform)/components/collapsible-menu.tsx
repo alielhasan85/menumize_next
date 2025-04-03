@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ChevronRight, Icon as LucideIcon } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/sidebar";
 
 interface CollapsibleMenuProps {
-  icon: LucideIcon;
   label: string;
   tooltip?: string;
   /**
@@ -40,7 +39,6 @@ interface CollapsibleMenuProps {
 }
 
 export default function CollapsibleMenu({
-  icon: Icon,
   label,
   tooltip,
   openByDefault = false,
@@ -61,7 +59,7 @@ export default function CollapsibleMenu({
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
           <SidebarMenuButton tooltip={tooltip || label}>
-            <Icon />
+            <ChevronRight />
             <span>{label}</span>
             <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
           </SidebarMenuButton>

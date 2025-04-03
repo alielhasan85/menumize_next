@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { usePathname } from "next/navigation";
-import { Icon as LucideIcon } from "lucide-react";
 import {
   SidebarMenuButton,
   SidebarMenuItem,
@@ -16,14 +15,12 @@ import {
  * @param href     The URL for the link
  */
 interface SidebarSingleItemProps {
-  icon: LucideIcon;
   label: string;
   href: string;
   tooltip?: string;
 }
 
 export default function SidebarSingleItem({
-  icon: Icon,
   label,
   href,
   tooltip,
@@ -35,7 +32,6 @@ export default function SidebarSingleItem({
     <SidebarMenuItem>
       <SidebarMenuButton isActive={isActive} tooltip={tooltip || label} asChild>
         <a href={href}>
-          <Icon />
           <span className="group-data-[collapsible=icon]:hidden">{label}</span>
         </a>
       </SidebarMenuButton>
